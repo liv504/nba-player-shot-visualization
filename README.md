@@ -17,7 +17,7 @@ Visualize shot locations for any player across seasons with filters for playoffs
 ---
 
 ## 🖼 Demo
-
+* demonstration/Screenshot.png
 ---
 
 ## 🛠 Tech Stack
