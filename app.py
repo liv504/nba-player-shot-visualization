@@ -19,7 +19,6 @@ def player_shots():
     if not name or not season_start or not season_end:
         return jsonify({"error": "Must provide player name and season start/end"}), 400
 
-
     matches = players.find_players_by_full_name(name)
     if not matches:
         return jsonify({"error": "Player not found"}), 404
@@ -36,7 +35,6 @@ def player_shots():
 
     seasons = season_range(season_start, season_end)
 
-
     opponent_ids = []
     if opponent_param:
         abbreviations = [abbr.strip().upper() for abbr in opponent_param.split(",")]
@@ -45,10 +43,7 @@ def player_shots():
             if team:
                 opponent_ids.append(team["id"])
 
-
-    season_types = (
-        ["Regular Season", "Playoffs"] if season_type == "Both" else [season_type]
-    )
+    season_types = ["Regular Season", "Playoffs"] if season_type == "Both" else [season_type]
 
     all_shots = []
 
@@ -62,7 +57,8 @@ def player_shots():
                         season_nullable=season,
                         season_type_all_star=stype,
                         opponent_team_id=opp_id,
-                        context_measure_simple="FGA"
+                        context_measure_simple="FGA",
+                        timeout=90  
                     )
                     df = chart.get_data_frames()[0]
                     all_shots.extend(
@@ -74,7 +70,8 @@ def player_shots():
                     player_id=player_id,
                     season_nullable=season,
                     season_type_all_star=stype,
-                    context_measure_simple="FGA"
+                    context_measure_simple="FGA",
+                    timeout=90 
                 )
                 df = chart.get_data_frames()[0]
                 all_shots.extend(
